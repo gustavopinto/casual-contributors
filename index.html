@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<title>Energy Aware Mining</title>
+
+<xmp theme="united" style="display:none;">
+
+# SANER 2015
+
+This document presents the steps needed in order to reproduce the data used in our SANER'15 study. Read on for the tips.
+
+## Github Data
+
+### Finding the projecs
+
+Using [GithubArchive](http://githubarchive.org/), we used the following query in order to select our initial set of projects:
+
+```
+SELECT
+  a.repository_name as name,
+  a.repository_owner as owner,
+  a.repository_organization as organization,
+  a.repository_watchers AS stars,
+  a.repository_forks AS forks,
+  a.repository_language as language
+FROM (
+select *
+from [githubarchive:github.timeline] a
+where a.repository_language = "Haskell"
+) as a
+JOIN EACH
+  (
+     SELECT MAX(created_at) as max_created, repository_name
+     FROM [githubarchive:github.timeline]
+     GROUP EACH BY repository_name
+  ) as b
+  ON
+  b.max_created = a.created_at and
+  b.repository_name = a.repository_name
+ORDER BY stars desc
+LIMIT 20
+```
+
+For each programming language analyzed, we changed the ```where``` clause, where it appears ```Haskell```, for the programming language we intent to analyze. We ran the query and the result we stored in a CSV file, similar to this [one](C++.csv). Create a single CSV for each programming language.
+
+
+### Downloading the projecs
+
+After saving all required CSVs, run the program ```cloner.py``` in the same directory that you saved the CSV files.
+
+```
+python cloner.py
+```
+
+This script will try to clone each project in the current directory.
+
+### Analysis
+
+After downloading all required projects, it is time to analyze them. Use script ```contributions.sh``` to generate inidividual casual contributions.
+
+```
+./contributions.sh
+```
+
+Use script ```casual_contributors.py``` to parse this data in a CSV fashion. Similar to this [one](/Ruby/casual_contributions.csv).
+
+```
+python casual_contributors.py
+```
+
+Use script ```loc.sh``` to generate lines of code data for each project. This script requires that the program ```cloc``` is installed.
+
+```
+./loc.sh
+```
+
+Use script ```difference_contributors.py``` to generate data regarding the number of projects and their number of contributors.
+
+```
+python casual_contributors.py
+```
+
+## Surveys
+
+### Casual contributors questionnaire
+
+### Project maintainers questionnaire
+
+
+</xmp>
+
+<script src="http://strapdownjs.com/v/0.2/strapdown.js"></script>
+</html>
