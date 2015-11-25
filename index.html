@@ -47,7 +47,7 @@ For each programming language analyzed, we changed the ```where``` clause, where
 
 ### Downloading the projecs
 
-After saving all required CSVs, run the program [cloner.py](cloner.py) in the same directory that you saved the CSV files.
+After saving all required CSVs, run the program [cloner.py](https://github.com/gustavopinto/casual-contributors/blob/gh-pages/cloner.py) in the same directory that you saved the CSV files.
 
 ```
 python cloner.py
@@ -57,25 +57,25 @@ This script will try to clone each project in the current directory.
 
 ### Analysis
 
-After downloading all required projects, it is time to analyze them. Use script ```contributions.sh``` to generate inidividual casual contributions.
+After downloading all required projects, it is time to analyze them. Use script [contributions.sh](https://github.com/gustavopinto/casual-contributors/blob/gh-pages/contributions.sh) to generate inidividual casual contributions.
 
 ```
 ./contributions.sh
 ```
 
-Use script ```casual_contributors.py``` to parse this data in a CSV fashion.
+Use script [casual_contributors.py](https://github.com/gustavopinto/casual-contributors/blob/gh-pages/casual_contributors.py) to parse this data in a CSV fashion.
 
 ```
 python casual_contributors.py
 ```
 
-Use script ```loc.sh``` to generate lines of code data for each project. This script requires that the program ```cloc``` is installed.
+Use script [loc.sh](https://github.com/gustavopinto/casual-contributors/blob/gh-pages/loc.sh) to generate lines of code data for each project. This script requires that the program ```cloc``` is installed.
 
 ```
 ./loc.sh
 ```
 
-Use script ```difference_contributors.py``` to generate data regarding the number of projects and their number of contributors.
+Use script [difference_contributors.py](https://github.com/gustavopinto/casual-contributors/blob/gh-pages/difference_contributors.py) to generate data regarding the number of projects and their number of contributors.
 
 ```
 python casual_contributors.py
